@@ -1,0 +1,19 @@
+{
+  "name": "career-pivot-coach",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,green \"npm run dev -w server\" \"npm run dev -w client\"",
+    "dev:demo": "concurrently -n server,client -c blue,green \"npm run dev:demo -w server\" \"npm run dev -w client\"",
+    "seed": "npm run seed -w server",
+    "test": "npm test -w server",
+    "build": "npm run build -w client"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}
