@@ -1,3 +1,5 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
@@ -35,6 +37,11 @@ app.use('/api/plan', planRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/interviews', interviewRoutes);
 app.use('/api/applications', applicationRoutes);
+
+// The client and API share one origin in production, so the session cookie stays first-party.
+const clientDist = fileURLToPath(new URL('../client/dist', import.meta.url));
+app.use(express.static(clientDist));
+app.get(/^\/(?!api).*/, (req, res) => res.sendFile(path.join(clientDist, 'index.html')));
 
 app.use(errorHandler);
 
